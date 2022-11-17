@@ -17,10 +17,15 @@ fileSelector.addEventListener('change', (event) => {
   let reader = new FileReader();
   reader.addEventListener("loadend", () => {
 
+    
+    const ul = document.querySelector('.excursions');
+    const li = document.querySelector('.excursions__item--prototype');
+
     result.innerText = reader.result;
     const lines = reader.result.split(/[\r\n]+/gm);
 
     const line2 = lines[1].split('",')
+    console.log(line2)
    
     const id2 = line2[0].substring(
       line2[0].indexOf("") + 1,
@@ -29,8 +34,9 @@ fileSelector.addEventListener('change', (event) => {
 
     const title2 = line2[1].substring(
       line2[1].indexOf("") + 1,
-      line2[1].lastIndexOf("") - 1
+      line2[1].lastIndexOf("") 
     )
+    console.log(title2)
 
     const description2 = line2[2].substring(
       line2[2].indexOf("") + 1,
@@ -48,7 +54,21 @@ fileSelector.addEventListener('change', (event) => {
     )
 
     console.log(id2, title2, description2, adultNumber2, childNumber2)
+
+    let clone = li.cloneNode(true)
+    const cloneTitle = clone.querySelector('.excursions__title')
+    const cloneDescription = clone.querySelector('.excursions__description');
+    const clonePrices = clone.querySelectorAll('.excursions__price');
+
+    cloneTitle.innerText = title2;
+    cloneDescription.innerText = description2;
+    clonePrices[0].innerText = adultNumber2;
+    clonePrices[1].innerText = childNumber2;
+    
+    ul.appendChild(clone)
+
   });
+
   
 
   reader.readAsText(selected);

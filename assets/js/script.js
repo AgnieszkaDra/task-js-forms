@@ -17,8 +17,16 @@ fileSelector.addEventListener('change', (event) => {
    let reader = new FileReader();
    reader.addEventListener("loadend", () => {
      result.innerText = reader.result;
-     const lines = reader.result.split(/[\r\n]+/);
+     const lines = reader.result.split(/[\r\n]+/gm);
+     
+     const lines2 = lines[0].split((/"(?:,)"|(?:)"/g))
+     
+     
    console.log(lines)
+   console.log(lines2, 'ok')
+   console.log(lines3)
+   console.log(lines4)
+   result.innerText = lines3
    });
    reader.readAsText(selected);
  

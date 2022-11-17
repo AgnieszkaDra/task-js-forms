@@ -4,8 +4,21 @@ const txt = `"1","Ogrodzieniec","Zamek Ogrodzieniec – ruiny zamku leżącego n
 console.log( txt.split(/[\r\n]+/gm) );
 
 const fileSelector = document.querySelector('.uploader__input');
+const result = document.querySelector('.result')
 
 fileSelector.addEventListener('change', (event) => {
     const fileList = event.target.files;
     console.log(fileList);
+
+   let selected = fileSelector.files[0]
+   console.log(selected)
+   
+   let reader = new FileReader();
+   reader.addEventListener("loadend", () => {
+     result.innerText = reader.result;
+   });
+   reader.readAsText(selected);
+ 
   });
+
+  

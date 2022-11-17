@@ -13,9 +13,12 @@ fileSelector.addEventListener('change', (event) => {
    let selected = fileSelector.files[0]
    console.log(selected)
    
+
    let reader = new FileReader();
    reader.addEventListener("loadend", () => {
      result.innerText = reader.result;
+     const lines = reader.result.split(/[\r\n]+/);
+   console.log(lines)
    });
    reader.readAsText(selected);
  

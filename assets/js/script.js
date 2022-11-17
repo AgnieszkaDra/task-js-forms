@@ -18,6 +18,34 @@ fileSelector.addEventListener('change', (event) => {
    reader.addEventListener("loadend", () => {
      result.innerText = reader.result;
      const lines = reader.result.split(/[\r\n]+/gm);
+     console.log(lines.length)
+    const line1 = lines[0]
+    const splitLine1 = line1.split(',')
+    console.log(splitLine1)
+    const substringLine1 = splitLine1[0].substring(
+      splitLine1[0].indexOf("") + 1, 
+      splitLine1[0].lastIndexOf("") -1
+   )
+   console.log(substringLine1)
+     
+     for(let key = 0; key < lines.length; key++){
+      const ex = lines.key[0]
+      console.log(ex)
+      const exsplit = ex.split(',')
+      console.log(exsplit)
+  
+      console.log(ex)
+      const excursionDetails = {
+          id: excursion[0],
+          title: excursion[1],
+          description: excursion[2],
+          adultNumber: excursion[3],
+          childNumber: excursion[4],
+      }
+      
+      excursions.appendChild(createExcursionClone(excursionDetails));
+      
+  }
      
      const lines2 = lines[0].split(',')
      console.log(lines2[0])

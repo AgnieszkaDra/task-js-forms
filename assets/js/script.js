@@ -24,34 +24,61 @@ fileSelector.addEventListener('change', (event) => {
     result.innerText = reader.result;
     const lines = reader.result.split(/[\r\n]+/gm);
 
+    const line1 = lines[0].split('",')
     const line2 = lines[1].split('",')
-    console.log(line2)
-   
-    const id2 = line2[0].substring(
-      line2[0].indexOf("") + 1,
-      line2[0].lastIndexOf("") - 1
-    )
+    console.log(line1)
+    
+    const id = function(line){
+      return line[0].substring(
+              line[0].indexOf("") + 1,
+              line[0].lastIndexOf("") 
+      )
+    }
 
-    const title2 = line2[1].substring(
-      line2[1].indexOf("") + 1,
-      line2[1].lastIndexOf("") 
-    )
-    console.log(title2)
+    const id1 = id(line1)
+    const id2 = id(line2)
+    console.log(id1, id2)
 
-    const description2 = line2[2].substring(
-      line2[2].indexOf("") + 1,
-      line2[2].lastIndexOf("") - 1
-    )
+   const title = function(line) {
+      return line[1].substring(
+        line[1].indexOf("") + 1,
+        line[1].lastIndexOf("") 
+      )
+   }
 
-    const adultNumber2 = line2[3].substring(
-      line2[3].indexOf("") + 1,
-      line2[3].lastIndexOf("") - 1
-    )
+   const title1 = title(line1)
+   const title2 = title(line2)
+   console.log(title1, title2)
 
-    const childNumber2 = line2[4].substring(
-      line2[4].indexOf("") + 1,
-      line2[4].lastIndexOf("") - 1
+  const description = function(line) {
+    return line[2].substring(
+      line[2].indexOf("") + 1,
+      line[2].lastIndexOf("") 
     )
+  }
+
+  const description1 = description(line1)
+  const description2 = description(line2)
+
+  const adultNumber = function(line) {
+    return line[3].substring(
+      line[3].indexOf("") + 1,
+      line[3].lastIndexOf("") - 1
+    )
+  }
+
+  const adultNumber1 = adultNumber(line1)
+  const adultNumber2 = adultNumber(line2)
+
+  const childNumber = function(line) {
+    return line[4].substring(
+      line[4].indexOf("") + 1,
+      line[4].lastIndexOf("") - 1
+    )
+  }
+
+  const childNumber1 = childNumber(line1)
+  const childNumber2 = childNumber(line2)
 
     console.log(id2, title2, description2, adultNumber2, childNumber2)
 
@@ -59,6 +86,9 @@ fileSelector.addEventListener('change', (event) => {
     const cloneTitle = clone.querySelector('.excursions__title')
     const cloneDescription = clone.querySelector('.excursions__description');
     const clonePrices = clone.querySelectorAll('.excursions__price');
+
+    const rawDescription = document.querySelector('.excursions__description')
+    rawDescription.innerText = description1
 
     cloneTitle.innerText = title2;
     cloneDescription.innerText = description2;
@@ -69,9 +99,11 @@ fileSelector.addEventListener('change', (event) => {
 
   });
 
-  
-
   reader.readAsText(selected);
 
 });
+
+function changeDescriptionValue() {
+  const description = document.querySelector()
+}
 

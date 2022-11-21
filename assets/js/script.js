@@ -11,7 +11,7 @@ const username = form.querySelector('[name="name"]')
 const rootUserName = username.parentElement.parentElement
 const email = form.querySelector('[name = "email"]')
 const rootEmail = username.parentElement.parentElement
-const basket = []
+
 
 
 const formSubmitElements = [
@@ -37,7 +37,7 @@ const validateInputs = (e) => {
 
   const userNameValue = username.value.trim()
   const emailValue = email.value.trim()
-  const good = []
+ 
   
   function checkData(e) {
       if (!(userNameValue === '') && !(emailValue === "")) {
@@ -48,21 +48,17 @@ const validateInputs = (e) => {
 
       if (userNameValue === '') {
           setError(username,'Wypełnij powyższe pole')
-          good.push('error')
+         
       } 
 
       if (emailValue === '') {
           setError(email,'Wypelnij powyższe pole')
-          good.push('error')
+         
       }
 
       if ((!emailValue.includes('@'))){
           setError(email, 'Adres email musi zawierać @')
-          good.push('error')
-      }
-
-      if (good.length === 0){
-          
+         
       }
 
   }
@@ -96,7 +92,6 @@ const showInputValue = function (el, rootContainer ) {
 
   el.addEventListener('keyup', function (event) {
       if (event.key === "Enter") {
-
           rootContainer.innerText = ''
           validateInputs()
       }
@@ -109,52 +104,73 @@ const render = function() {
   const usernameElement = showInputValue(username, rootUserName)
   const emailElement = showInputValue(email, rootEmail )
 
-  //rootUserName.appendChild(usernameElement)
-  //rootEmail.appendChild(emailElement)
+  
 }
 
 render()
 
 function addOrderOgrodzieniec(event){
   event.preventDefault();
+  console.log(event.target)
   const excursion = event.target.parentElement;
   console.log(excursion)
   const inputAdult = event.target.adults;
-  //console.log(adults)
+  console.log(inputAdult)
   const inputChild = event.target.children;
-  //console.log(children)
+  console.log(inputChild)
+  
   const adultNumber = Number(inputAdult.value);
   console.log(adultNumber)
   const childNumber = Number(inputChild.value);
-  const id = Number(excursion.dataset.id);
-  console.log(id)
-  const excursionForm = document.querySelector('.excursions__form');
 
   if(adultNumber > 0 || childNumber > 0){
-    if(basket.length === 0 || basket.length > 0 ){
-      basket.push(adultNumber)
-      basket.push(childNumber)
-      basket.push(createBasket(excursion, adultNumber, childNumber));
-      console.log(basket)
-  }
-  }
+     
+      const excursionTitle = excursion.querySelector('.excursions__title').innerText;
+      const price = excursion.querySelectorAll('.excursions__price');
+      const summaryPrices = document.querySelector('.summary__prices');
+      const summaryTotalPrice = document.querySelector('.summary__total-price');
+      const adultPrice = Number(price[0].innerText)
+      const childPrice = Number(price[1].innerText)
+      summaryPrices.innerText = `dorośli: ${adultNumber} x ${adultPrice}PLN, dzieci: ${childNumber} x ${childPrice}PLN`;
+      summaryTotalPrice.innerText = adultPrice * adultNumber + childPrice * childNumber;
+      
+}
+ 
 }
 
-function createBasket(excursion, adultNumber, childNumber){
-  const excursionTitle = excursion.querySelector('.excursions__title').innerText;
-  const price = excursion.querySelectorAll('.excursions__price');
+function addOrderOjców(event){
+alert('ojców')
+  event.preventDefault();
+  const summary = document.querySelector('.summary')
+console.log(summary)
+    const div = document.createElement('div')
+summary.appendChild(div)
+  const excursion = event.target.parentElement;
+  const inputAdult = event.target.adults;
+  const inputChild = event.target.children;
+  const adultNumber = Number(inputAdult.value);
+  const childNumber = Number(inputChild.value);
 
-  const order = {
-              title: excursionTitle,
-              
-              adultNumber: adultNumber || 0,
-              adultPrice: Number(price[0].innerText),
-              childNumber: childNumber || 0,
-              childPrice: Number(price[1].innerText),
-  }
+  if(adultNumber > 0 || childNumber > 0){
+     
 
-  return order
+      const excursionTitle = excursion.querySelector('.excursions__title');
+      
+      const price = excursion.querySelectorAll('.excursions__price');
+      const summaryPrices = document.querySelector('.summary__prices');
+      const summaryTotalPrice = document.querySelector('.summary__total-price');
+      const adultPrice = Number(price[0].innerText)
+      const childPrice = Number(price[1].innerText)
+      summaryPrices.innerText = `dorośli: ${adultNumber} x ${adultPrice}PLN, dzieci: ${childNumber} x ${childPrice}PLN`;
+      summaryTotalPrice.innerText = adultPrice * adultNumber + childPrice * childNumber;
+      
 }
+ 
+}
+
+
+
+
 
 
 
@@ -221,10 +237,13 @@ function createBasket(excursion, adultNumber, childNumber){
 
 // }
 fileSelector.addEventListener('change', readFile);
-excursions[0].addEventListener('submit', addOrderOgrodzienieć);
+excursions[0].addEventListener('submit', addOrderOgrodzieniec);
+excursions[1].addEventListener('submit', addOrderOjców)
+
 
 
 function readFile(event) {
+  
 
 
   const fileList = event.target.files;
@@ -243,7 +262,7 @@ function readFile(event) {
    
     li.classList.remove('excursions__item--prototype')
     
-    result.innerText = reader.result;
+   
     const lines = reader.result.split(/[\r\n]+/gm);
 
     const line1 = lines[0].split('",')
@@ -323,9 +342,6 @@ function readFile(event) {
     cloneDescription.innerText = description2;
     clonePrices[0].innerText = adultNumber2;
     clonePrices[1].innerText = childNumber2;
-
-    
-
 
     ul.appendChild(clone)
 

@@ -146,6 +146,7 @@ function addOrderOgrodzieniec(event){
 function addOrderOjców(event){
 alert('ojców')
   event.preventDefault();
+  event.stopPropagation()
   const summary = document.querySelector('.summary')
 console.log(summary)
     const div = document.createElement('div')

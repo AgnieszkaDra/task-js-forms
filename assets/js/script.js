@@ -151,7 +151,21 @@ console.log(summary)
     const div = document.createElement('div')
 //summary.appendChild(div)
 const summaryClone = summary.cloneNode(true);
-        summary.appendChild(summaryClone);
+console.log(summaryClone)
+        summary.appendChild(createSummaryClone(summaryClone));
+
+        function createSummaryClone(clone){
+          const summaryName = clone.querySelector('.summary__name');
+          summaryName.innerText = 'Ojców'
+          // const summaryTotalPrice = clone.querySelector('.summary__total-price');
+          // const summaryPrices = clone.querySelector('.summary__prices');
+          // clone.setAttribute('data-id', item.id);
+          // clone.classList.remove('summary__item--prototype');
+          // summaryName.innerText = item.title;
+          // summaryTotalPrice.innerText = item.adultPrice * item.adultNumber + item.childPrice * item.childNumber;
+          // summaryPrices.innerText = `dorośli: ${item.adultNumber} x ${item.adultPrice}PLN, dzieci: ${item.childNumber} x ${item.childPrice}PLN`;
+          // return clone
+      }
   const excursion = event.target.parentElement;
   const inputAdult = event.target.adults;
   const inputChild = event.target.children;

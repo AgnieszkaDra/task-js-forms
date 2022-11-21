@@ -169,7 +169,7 @@ console.log(summaryClone)
           // summaryPrices.innerText = `dorośli: ${item.adultNumber} x ${item.adultPrice}PLN, dzieci: ${item.childNumber} x ${item.childPrice}PLN`;
           // return clone
       
-  const excursion = event.target.parentElement;
+  const excursion2 = event.target.parentElement;
   const inputAdult2 = event.target.adults;
   console.log(inputAdult2)
   const inputChild2 = event.target.children;
@@ -180,16 +180,18 @@ console.log(summaryClone)
   if(adultNumber2 > 0 || childNumber2 > 0){
      
 
-      const excursionTitle = excursion.querySelector('.excursions__title');
+      const excursionTitle = excursion2.querySelector('.excursions__title');
       console.log(excursionTitle)
       //excursionTitle.innerText = 'Ojców'
       
-      const price = excursion.querySelectorAll('.excursions__price');
-      console.log(price)
-      const summaryPrices = excursion.querySelector('.summary__prices');
+      const price = excursion2.querySelectorAll('.excursions__price');
+      console.log(price[0])
+      const summaryPrices = summaryClone.querySelector('.summary__prices');
+      console.log(summaryPrices)
       summaryPrices.classList.add('pti')
-      const summaryTotalPrice = excursion.querySelector('.summary__total-price');
+      const summaryTotalPrice = summaryClone.querySelector('.summary__total-price');
       const adultPrice2 = Number(price[0].innerText)
+      console.log(adultPrice2)
       const childPrice2 = Number(price[1].innerText)
       summaryPrices.innerText = `dorośli: ${adultNumber2} x ${adultPrice2}PLN, dzieci: ${childNumber2} x ${childPrice2}PLN`;
       summaryTotalPrice.innerText = adultPrice2* adultNumber2 + childPrice2 * childNumber2;

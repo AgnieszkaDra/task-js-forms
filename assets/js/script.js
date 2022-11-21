@@ -7,7 +7,9 @@ const fileSelector = document.querySelector('.uploader__input');
 const result = document.querySelector('.result')
 const form = document.querySelector('.order');
 const username = form.querySelector('[name="name"]')
+const rootUserName = username.parentElement.parentElement
 const email = form.querySelector('[name = "email"]')
+const rootEmail = username.parentElement.parentElement
 console.log(username, email)
 
 const formNameSubmitElement = {
@@ -39,16 +41,17 @@ const formSubmitElements = [
 ]
 
 form.addEventListener('submit', e => {
-  e.preventDefault()
-  validateInputs()
+  e.preventDefault(e)
+  validateInputs(e)
 })
 
-const validateInputs = () => {
+const validateInputs = (e) => {
 
   const userNameValue = username.value.trim()
   const emailValue = email.value.trim()
+  const good = []
   
-  function checkData() {
+  function checkData(e) {
       if (!(userNameValue === '') && !(emailValue === "")) {
        
           setSuccess(username)
@@ -57,17 +60,29 @@ const validateInputs = () => {
 
       if (userNameValue === '') {
           setError(username,'Wypełnij powyższe pole')
+          good.push('error')
       } 
 
       if (emailValue === '') {
           setError(email,'Wypelnij powyższe pole')
+          good.push('error')
       }
-      
+
+      if ( (!emailValue.includes('@'))){
+          setError(email, 'Adres email musi zawierać @')
+          good.push('error')
+      }
+
+      if (good.length === 0){
+          
+      }
+
   }
 
   checkData()
 
 }
+
 
 const setSuccess = element => {
 
@@ -86,6 +101,30 @@ const setError = (element, message) => {
   errorDisplay.innerText = message
   inputControl.classList.add('error')
   inputControl.classList.remove('success')
+
+}
+
+const showInputValue = function (el, rootContainer ) {
+
+  el.addEventListener('keyup', function (event) {
+      if (event.key === "Enter") {
+
+          rootContainer.innerText = ''
+          validateInputs()
+
+          
+
+      }
+  })
+}
+
+const render = function() {
+
+  const usernameElement = showInputValue(username, rootUserName)
+  const emailElement = showInputValue(email, rootEmail )
+
+  rootUserName.appendChild(usernameElement)
+  rootEmail.appendChild(emailElement)
 }
 
 

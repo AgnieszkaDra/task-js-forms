@@ -151,11 +151,14 @@ console.log(summary)
     const div = document.createElement('div')
 //summary.appendChild(div)
 const summaryClone = summary.cloneNode(true);
-console.log(summaryClone)
-        summary.appendChild(createSummaryClone(summaryClone));
+summaryClone.classList.add('sum')
 
-        function createSummaryClone(clone){
-          const summaryName = clone.querySelector('.summary__name');
+console.log(summaryClone)
+        summary.appendChild(summaryClone);
+
+        
+          const summaryName = summaryClone.querySelector('.summary__name');
+          console.log(summaryName)
           summaryName.innerText = 'Ojców'
           // const summaryTotalPrice = clone.querySelector('.summary__total-price');
           // const summaryPrices = clone.querySelector('.summary__prices');
@@ -165,25 +168,31 @@ console.log(summaryClone)
           // summaryTotalPrice.innerText = item.adultPrice * item.adultNumber + item.childPrice * item.childNumber;
           // summaryPrices.innerText = `dorośli: ${item.adultNumber} x ${item.adultPrice}PLN, dzieci: ${item.childNumber} x ${item.childPrice}PLN`;
           // return clone
-      }
+      
   const excursion = event.target.parentElement;
-  const inputAdult = event.target.adults;
-  const inputChild = event.target.children;
-  const adultNumber = Number(inputAdult.value);
-  const childNumber = Number(inputChild.value);
+  const inputAdult2 = event.target.adults;
+  console.log(inputAdult2)
+  const inputChild2 = event.target.children;
+  const adultNumber2 = Number(inputAdult2.value);
+  alert(adultNumber2)
+  const childNumber2= Number(inputChild2.value);
 
-  if(adultNumber > 0 || childNumber > 0){
+  if(adultNumber2 > 0 || childNumber2 > 0){
      
 
       const excursionTitle = summaryClone.querySelector('.excursions__title');
-      excursionTitle.innerText = 'Ojców'
+      console.log(excursionTitle)
+      //excursionTitle.innerText = 'Ojców'
+      
       const price = summaryClone.querySelectorAll('.excursions__price');
+      console.log(price)
       const summaryPrices = summaryClone.querySelector('.summary__prices');
+      summaryPrices.classList.add('pti')
       const summaryTotalPrice = summaryClone.querySelector('.summary__total-price');
-      const adultPrice = Number(price[0].innerText)
-      const childPrice = Number(price[1].innerText)
-      summaryPrices.innerText = `dorośli: ${adultNumber} x ${adultPrice}PLN, dzieci: ${childNumber} x ${childPrice}PLN`;
-      summaryTotalPrice.innerText = adultPrice * adultNumber + childPrice * childNumber;
+      const adultPrice2 = Number(price[0].innerText)
+      const childPrice2 = Number(price[1].innerText)
+      summaryPrices.innerText = `dorośli: ${adultNumber2} x ${adultPrice2}PLN, dzieci: ${childNumber2} x ${childPrice2}PLN`;
+      summaryTotalPrice.innerText = adultPrice2* adultNumber2 + childPrice2 * childNumber2;
       
 }
  
@@ -375,7 +384,7 @@ function readFile(event) {
     })
 
     const excursion = document.querySelectorAll('.excursions__item')
-console.log(excursionOgro[0])
+console.log(excursion[1])
 excursion[0].addEventListener('submit', addOrderOgrodzieniec)
 excursion[1].addEventListener('submit', addOrderOjców)
 

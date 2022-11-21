@@ -54,3 +54,11 @@ ul {
 .success {
     border:  2px solid green;
 }
+
+.sum {
+    border: 2px solid pink;
+}
+
+.pti {
+    background-color: yellow;
+}

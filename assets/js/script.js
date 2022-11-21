@@ -180,15 +180,15 @@ console.log(summaryClone)
   if(adultNumber2 > 0 || childNumber2 > 0){
      
 
-      const excursionTitle = summaryClone.querySelector('.excursions__title');
+      const excursionTitle = excursion.querySelector('.excursions__title');
       console.log(excursionTitle)
       //excursionTitle.innerText = 'Ojców'
       
-      const price = summaryClone.querySelectorAll('.excursions__price');
+      const price = excursion.querySelectorAll('.excursions__price');
       console.log(price)
-      const summaryPrices = summaryClone.querySelector('.summary__prices');
+      const summaryPrices = excursion.querySelector('.summary__prices');
       summaryPrices.classList.add('pti')
-      const summaryTotalPrice = summaryClone.querySelector('.summary__total-price');
+      const summaryTotalPrice = excursion.querySelector('.summary__total-price');
       const adultPrice2 = Number(price[0].innerText)
       const childPrice2 = Number(price[1].innerText)
       summaryPrices.innerText = `dorośli: ${adultNumber2} x ${adultPrice2}PLN, dzieci: ${childNumber2} x ${childPrice2}PLN`;

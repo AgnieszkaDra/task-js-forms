@@ -6,24 +6,12 @@ console.log(txt.split(/[\r\n]+/gm));
 const fileSelector = document.querySelector('.uploader__input');
 const result = document.querySelector('.result')
 const form = document.querySelector('.order');
+const excursions = document.querySelectorAll('.excursions');
 const username = form.querySelector('[name="name"]')
 const rootUserName = username.parentElement.parentElement
 const email = form.querySelector('[name = "email"]')
 const rootEmail = username.parentElement.parentElement
-console.log(username, email)
-
-const formNameSubmitElement = {
-  name: 'name',
-  label: 'Imie i nazwisko',
-  required: true
-}
-
-const formEmailSubmitElement =
-{
-  name: 'email',
-  label: 'Email',
-  required: true
-}
+const basket = []
 
 
 const formSubmitElements = [
@@ -68,7 +56,7 @@ const validateInputs = (e) => {
           good.push('error')
       }
 
-      if ( (!emailValue.includes('@'))){
+      if ((!emailValue.includes('@'))){
           setError(email, 'Adres email musi zawierać @')
           good.push('error')
       }
@@ -111,21 +99,63 @@ const showInputValue = function (el, rootContainer ) {
 
           rootContainer.innerText = ''
           validateInputs()
-
-          
-
       }
   })
 }
+
 
 const render = function() {
 
   const usernameElement = showInputValue(username, rootUserName)
   const emailElement = showInputValue(email, rootEmail )
 
-  rootUserName.appendChild(usernameElement)
-  rootEmail.appendChild(emailElement)
+  //rootUserName.appendChild(usernameElement)
+  //rootEmail.appendChild(emailElement)
 }
+
+render()
+
+function addOrderOgrodzieniec(event){
+  event.preventDefault();
+  const excursion = event.target.parentElement;
+  console.log(excursion)
+  const inputAdult = event.target.adults;
+  //console.log(adults)
+  const inputChild = event.target.children;
+  //console.log(children)
+  const adultNumber = Number(inputAdult.value);
+  console.log(adultNumber)
+  const childNumber = Number(inputChild.value);
+  const id = Number(excursion.dataset.id);
+  console.log(id)
+  const excursionForm = document.querySelector('.excursions__form');
+
+  if(adultNumber > 0 || childNumber > 0){
+    if(basket.length === 0 || basket.length > 0 ){
+      basket.push(adultNumber)
+      basket.push(childNumber)
+      basket.push(createBasket(excursion, adultNumber, childNumber));
+      console.log(basket)
+  }
+  }
+}
+
+function createBasket(excursion, adultNumber, childNumber){
+  const excursionTitle = excursion.querySelector('.excursions__title').innerText;
+  const price = excursion.querySelectorAll('.excursions__price');
+
+  const order = {
+              title: excursionTitle,
+              
+              adultNumber: adultNumber || 0,
+              adultPrice: Number(price[0].innerText),
+              childNumber: childNumber || 0,
+              childPrice: Number(price[1].innerText),
+  }
+
+  return order
+}
+
 
 
 
@@ -190,9 +220,13 @@ const render = function() {
 //   // }
 
 // }
+fileSelector.addEventListener('change', readFile);
+excursions[0].addEventListener('submit', addOrderOgrodzienieć);
 
 
-fileSelector.addEventListener('change', (event) => {
+function readFile(event) {
+
+
   const fileList = event.target.files;
   console.log(fileList);
 
@@ -206,7 +240,9 @@ fileSelector.addEventListener('change', (event) => {
 
     const ul = document.querySelector('.excursions');
     const li = document.querySelector('.excursions__item--prototype');
-
+   
+    li.classList.remove('excursions__item--prototype')
+    
     result.innerText = reader.result;
     const lines = reader.result.split(/[\r\n]+/gm);
 
@@ -218,11 +254,14 @@ fileSelector.addEventListener('change', (event) => {
       return line[0].substring(
         line[0].indexOf("") + 1,
         line[0].lastIndexOf("")
+        
       )
     }
 
     const id1 = id(line1)
     const id2 = id(line2)
+    li.setAttribute('data-id', id1)
+
     console.log(id1, id2)
 
     const title = function (line) {
@@ -269,24 +308,36 @@ fileSelector.addEventListener('change', (event) => {
     console.log(id2, title2, description2, adultNumber2, childNumber2)
 
     let clone = li.cloneNode(true)
+    clone.setAttribute('data-id', id2)
+    
     const cloneTitle = clone.querySelector('.excursions__title')
+    console.log(cloneTitle)
     const cloneDescription = clone.querySelector('.excursions__description');
     const clonePrices = clone.querySelectorAll('.excursions__price');
 
     const rawDescription = document.querySelector('.excursions__description')
     rawDescription.innerText = description1
 
+
     cloneTitle.innerText = title2;
     cloneDescription.innerText = description2;
     clonePrices[0].innerText = adultNumber2;
     clonePrices[1].innerText = childNumber2;
 
+    
+
+
     ul.appendChild(clone)
+
+    const order = document.querySelector('.order')
+    order.addEventListener('submit', function(e){
+      e.preventDefault()
+    })
 
   });
 
   reader.readAsText(selected);
 
-});
+};
 
 

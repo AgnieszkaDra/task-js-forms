@@ -7,10 +7,15 @@ const fileSelector = document.querySelector('.uploader__input');
 const result = document.querySelector('.result')
 const form = document.querySelector('.order');
 const excursions = document.querySelectorAll('.excursions');
+console.log(excursions)
+const excursionOgro = document.querySelectorAll('.excursions__item')
+console.log(excursionOgro)
 const username = form.querySelector('[name="name"]')
 const rootUserName = username.parentElement.parentElement
 const email = form.querySelector('[name = "email"]')
 const rootEmail = username.parentElement.parentElement
+const li = document.querySelector('.excursions__item--prototype');
+
 
 
 
@@ -144,7 +149,9 @@ alert('ojców')
   const summary = document.querySelector('.summary')
 console.log(summary)
     const div = document.createElement('div')
-summary.appendChild(div)
+//summary.appendChild(div)
+const summaryClone = summary.cloneNode(true);
+        summary.appendChild(summaryClone);
   const excursion = event.target.parentElement;
   const inputAdult = event.target.adults;
   const inputChild = event.target.children;
@@ -154,11 +161,11 @@ summary.appendChild(div)
   if(adultNumber > 0 || childNumber > 0){
      
 
-      const excursionTitle = excursion.querySelector('.excursions__title');
-      
-      const price = excursion.querySelectorAll('.excursions__price');
-      const summaryPrices = document.querySelector('.summary__prices');
-      const summaryTotalPrice = document.querySelector('.summary__total-price');
+      const excursionTitle = summaryClone.querySelector('.excursions__title');
+      excursionTitle.innerText = 'Ojców'
+      const price = summaryClone.querySelectorAll('.excursions__price');
+      const summaryPrices = summaryClone.querySelector('.summary__prices');
+      const summaryTotalPrice = summaryClone.querySelector('.summary__total-price');
       const adultPrice = Number(price[0].innerText)
       const childPrice = Number(price[1].innerText)
       summaryPrices.innerText = `dorośli: ${adultNumber} x ${adultPrice}PLN, dzieci: ${childNumber} x ${childPrice}PLN`;
@@ -237,13 +244,15 @@ summary.appendChild(div)
 
 // }
 fileSelector.addEventListener('change', readFile);
+
 excursions[0].addEventListener('submit', addOrderOgrodzieniec);
-excursions[1].addEventListener('submit', addOrderOjców)
+//excursions[1].addEventListener('submit', addOrderOjców)
 
 
 
 function readFile(event) {
   
+  console.dir(excursions.children)
 
 
   const fileList = event.target.files;
@@ -280,6 +289,7 @@ function readFile(event) {
     const id1 = id(line1)
     const id2 = id(line2)
     li.setAttribute('data-id', id1)
+    console.log(li)
 
     console.log(id1, id2)
 
@@ -349,6 +359,12 @@ function readFile(event) {
     order.addEventListener('submit', function(e){
       e.preventDefault()
     })
+
+    const excursion = document.querySelectorAll('.excursions__item')
+console.log(excursionOgro[0])
+excursion[0].addEventListener('submit', addOrderOgrodzieniec)
+excursion[1].addEventListener('submit', addOrderOjców)
+
 
   });
 

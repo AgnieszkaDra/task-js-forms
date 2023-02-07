@@ -32,7 +32,8 @@ ul {
     width: calc(50% - 20px);
 }
 
-.excursions__item--prototype {
+.excursions__item--prototype,
+.summary__item--prototype {
     display: none;
 }
 .panel__form {
@@ -59,6 +60,3 @@ ul {
     border: 2px solid pink;
 }
 
-.pti {
-    background-color: yellow;
-}

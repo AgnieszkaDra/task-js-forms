@@ -7,68 +7,36 @@ const fileSelector = document.querySelector('.uploader__input');
 const result = document.querySelector('.result')
 const form = document.querySelector('.order');
 const excursions = document.querySelectorAll('.excursions');
-console.log(excursions)
-const excursionOgro = document.querySelectorAll('.excursions__item')
-console.log(excursionOgro)
 const username = form.querySelector('[name="name"]')
-const rootUserName = username.parentElement.parentElement
 const email = form.querySelector('[name = "email"]')
-const rootEmail = username.parentElement.parentElement
-const li = document.querySelector('.excursions__item--prototype');
+const panelOgrodzieniec = document.querySelector('.summary__item--prototype')
 
-
-
-
-const formSubmitElements = [
-  {
-    name: 'name',
-    label: 'Imie i nazwisko',
-    required: true
-  },
-  {
-    name: 'email',
-    label: 'Email',
-    required: true
-  },
-
-]
+const summary = document.querySelector('.summary');
 
 form.addEventListener('submit', e => {
   e.preventDefault(e)
   validateInputs(e)
 })
 
-const validateInputs = (e) => {
+const validateInputs = () => {
 
   const userNameValue = username.value.trim()
   const emailValue = email.value.trim()
- 
-  
-  function checkData(e) {
-      if (!(userNameValue === '') && !(emailValue === "")) {
-       
-          setSuccess(username)
-          setSuccess(email)
-      } 
 
-      if (userNameValue === '') {
-          setError(username,'Wypełnij powyższe pole')
-         
-      } 
+  if (userNameValue === '') {
+    setError(username, 'Wypełnij powyższe pole')
 
-      if (emailValue === '') {
-          setError(email,'Wypelnij powyższe pole')
-         
-      }
+  } else if (emailValue === '') {
 
-      if ((!emailValue.includes('@'))){
-          setError(email, 'Adres email musi zawierać @')
-         
-      }
+    setError(email, 'Wypełnij powyższe pole')
+  } else if ((!emailValue.includes('@'))) {
+    setError(email, 'Adres email musi zawierać @')
 
+  } else {
+    setSuccess(username)
+    setSuccess(email)
+    alert('Formularz został wysłany')
   }
-
-  checkData()
 
 }
 
@@ -83,9 +51,8 @@ const setSuccess = element => {
 }
 
 const setError = (element, message) => {
-   
+
   const inputControl = element.parentElement.parentElement
-  console.log(inputControl)
   const errorDisplay = inputControl.nextElementSibling
   errorDisplay.innerText = message
   inputControl.classList.add('error')
@@ -93,231 +60,91 @@ const setError = (element, message) => {
 
 }
 
-const showInputValue = function (el, rootContainer ) {
 
-  el.addEventListener('keyup', function (event) {
-      if (event.key === "Enter") {
-          rootContainer.innerText = ''
-          validateInputs()
-      }
-  })
-}
+function addOrderOgrodzieniec(event) {
 
-
-const render = function() {
-
-  const usernameElement = showInputValue(username, rootUserName)
-  const emailElement = showInputValue(email, rootEmail )
-
-  
-}
-
-render()
-
-function addOrderOgrodzieniec(event){
   event.preventDefault();
-  console.log(event.target)
   const excursion = event.target.parentElement;
-  console.log(excursion)
   const inputAdult = event.target.adults;
-  console.log(inputAdult)
   const inputChild = event.target.children;
-  console.log(inputChild)
-  
   const adultNumber = Number(inputAdult.value);
-  console.log(adultNumber)
   const childNumber = Number(inputChild.value);
 
-  if(adultNumber > 0 || childNumber > 0){
-     
-      const excursionTitle = excursion.querySelector('.excursions__title').innerText;
-      const price = excursion.querySelectorAll('.excursions__price');
-      const summaryPrices = document.querySelector('.summary__prices');
-      const summaryTotalPrice = document.querySelector('.summary__total-price');
-      const adultPrice = Number(price[0].innerText)
-      const childPrice = Number(price[1].innerText)
-      summaryPrices.innerText = `dorośli: ${adultNumber} x ${adultPrice}PLN, dzieci: ${childNumber} x ${childPrice}PLN`;
-      summaryTotalPrice.innerText = adultPrice * adultNumber + childPrice * childNumber;
-      
-}
- 
+  if (adultNumber > 0 || childNumber > 0) {
+    const price = excursion.querySelectorAll('.excursions__price');
+    const summaryPrices = document.querySelector('.summary__prices');
+    const summaryTotalPrice = document.querySelector('.summary__total-price');
+    const adultPrice = Number(price[0].innerText)
+    const childPrice = Number(price[1].innerText)
+    summaryPrices.innerText = `dorośli: ${adultNumber} x ${adultPrice}PLN, dzieci: ${childNumber} x ${childPrice}PLN`;
+    summaryTotalPrice.innerText = adultPrice * adultNumber + childPrice * childNumber;
+
+  }
+
 }
 
-function addOrderOjców(event){
-alert('ojców')
+function addOrderOjców(event) {
+
   event.preventDefault();
-  event.stopPropagation()
-  const summary = document.querySelector('.summary')
-console.log(summary)
-    const div = document.createElement('div')
-//summary.appendChild(div)
-const summaryClone = summary.cloneNode(true);
-summaryClone.classList.add('sum')
-
-console.log(summaryClone)
-        summary.appendChild(summaryClone);
-
-        
-          const summaryName = summaryClone.querySelector('.summary__name');
-          console.log(summaryName)
-          summaryName.innerText = 'Ojców'
-          // const summaryTotalPrice = clone.querySelector('.summary__total-price');
-          // const summaryPrices = clone.querySelector('.summary__prices');
-          // clone.setAttribute('data-id', item.id);
-          // clone.classList.remove('summary__item--prototype');
-          // summaryName.innerText = item.title;
-          // summaryTotalPrice.innerText = item.adultPrice * item.adultNumber + item.childPrice * item.childNumber;
-          // summaryPrices.innerText = `dorośli: ${item.adultNumber} x ${item.adultPrice}PLN, dzieci: ${item.childNumber} x ${item.childPrice}PLN`;
-          // return clone
-      
+  const panelOjcow = document.querySelector('.ojcow')
   const excursion2 = event.target.parentElement;
   const inputAdult2 = event.target.adults;
-  console.log(inputAdult2)
   const inputChild2 = event.target.children;
   const adultNumber2 = Number(inputAdult2.value);
-  alert(adultNumber2)
-  const childNumber2= Number(inputChild2.value);
+  const childNumber2 = Number(inputChild2.value);
 
-  if(adultNumber2 > 0 || childNumber2 > 0){
-     
+  if (adultNumber2 > 0 || childNumber2 > 0) {
 
-      const excursionTitle = excursion2.querySelector('.excursions__title');
-      console.log(excursionTitle)
-      //excursionTitle.innerText = 'Ojców'
-      
-      const price = excursion2.querySelectorAll('.excursions__price');
-      console.log(price[0])
-      const summaryPrices = summaryClone.querySelector('.summary__prices');
-      console.log(summaryPrices)
-      summaryPrices.classList.add('pti')
-      const summaryTotalPrice = summaryClone.querySelector('.summary__total-price');
-      const adultPrice2 = Number(price[0].innerText)
-      console.log(adultPrice2)
-      const childPrice2 = Number(price[1].innerText)
-      summaryPrices.innerText = `dorośli: ${adultNumber2} x ${adultPrice2}PLN, dzieci: ${childNumber2} x ${childPrice2}PLN`;
-      summaryTotalPrice.innerText = adultPrice2* adultNumber2 + childPrice2 * childNumber2;
-      
+    const price = excursion2.querySelectorAll('.excursions__price');
+    const summary = document.querySelector('.summary');
+    const summaryItems = document.querySelectorAll('.summary__item');
+
+
+    for (let item of summaryItems) {
+      if (!item.classList.contains('summary__item--prototype')) {
+        summary.removeChild(item);
+      }
+    }
+
+    const summaryPrices = panelOjcow.querySelector('.summary__prices');
+    const summaryTotalPrice = panelOjcow.querySelector('.summary__total-price');
+    const adultPrice2 = Number(price[0].innerText)
+    const childPrice2 = Number(price[1].innerText)
+    summaryPrices.innerText = `dorośli: ${adultNumber2} x ${adultPrice2}PLN, dzieci: ${childNumber2} x ${childPrice2}PLN`;
+    summaryTotalPrice.innerText = adultPrice2 * adultNumber2 + childPrice2 * childNumber2;
+
+  }
+
 }
- 
-}
 
 
-
-
-
-
-
-
-// form.addEventListener('submit', validateForm)
-
-// function validateForm(event) {
-//   event.preventDefault();
-//   const errors = [];
-//   const nameElements = form.querySelectorAll('[name]')
-//   const emailElement = form.querySelector('[name = "email"]')
-//  const emailElementValue = emailElement.value
-// //  if(emailElementValue.includes('@')){
-      
-// //     } else {
-// //       const errorPlace = document.createElement('div')
-// //       errorPlace.classList.add('error')
-// //       errorPlace.innerText = 'Adres email musi zawierać @'
-// //       emailElement.parentElement.parentElement.appendChild(errorPlace)
-// //       //errors.push('error')
-// //     }
- 
-//   nameElements.forEach(function (nameElement, form) {
-
-//     const value = nameElement.value;
-
-//     form.addEventListener('keyup', function(event){
-//       if(event.key === 'Enter'){
-//         alert('wyczyść')
-//       }
-//     })
-
-//     if (value.length === 0) {
-
-//       const errorPlace = document.createElement('div')
-//       errorPlace.classList.add('error')
-//       errorPlace.innerText = 'wypełnij '
-//       nameElement.parentElement.parentElement.appendChild(errorPlace)
-
-//     } else if(emailElementValue.includes('@')){
-      
-//     } else if(!emailElementValue.includes('@')){
-//       const errorPlace = document.createElement('div')
-//       errorPlace.classList.add('error')
-//       errorPlace.innerText = 'adres email'
-//       nameElement.parentElement.parentElement.appendChild(errorPlace)
-      
-
-//       errorPlace.classList.add('em')
-//       const em = document.querySelector('.em')
-//       //const errorPlace = document.createElement('div')
-//       //errorPlace.classList.add('error')
-//       em.innerText = 'Adres email musi zawierać @'
-//       //emailElement.parentElement.parentElement.appendChild(errorPlace)
-//       //errors.push('error')
-//     }
-
-  
-//   })
-//   // if (errors.length === 0) {
-//   //   alert(`Formularz został wypełniony poprawnie`)
-//   //   errorPlace.innerText = ''
-//   // }
-
-// }
 fileSelector.addEventListener('change', readFile);
 
-excursions[0].addEventListener('submit', addOrderOgrodzieniec);
-//excursions[1].addEventListener('submit', addOrderOjców)
-
-
-
 function readFile(event) {
-  
-  console.dir(excursions.children)
-
-
-  const fileList = event.target.files;
-  console.log(fileList);
 
   let selected = fileSelector.files[0]
-  console.log(selected)
-
-
   let reader = new FileReader();
   reader.addEventListener("loadend", () => {
-
-
     const ul = document.querySelector('.excursions');
     const li = document.querySelector('.excursions__item--prototype');
-   
     li.classList.remove('excursions__item--prototype')
-    
-   
+
     const lines = reader.result.split(/[\r\n]+/gm);
 
     const line1 = lines[0].split('",')
     const line2 = lines[1].split('",')
-    console.log(line1)
+   
 
     const id = function (line) {
       return line[0].substring(
         line[0].indexOf("") + 1,
         line[0].lastIndexOf("")
-        
       )
     }
 
     const id1 = id(line1)
     const id2 = id(line2)
     li.setAttribute('data-id', id1)
-    console.log(li)
-
-    console.log(id1, id2)
 
     const title = function (line) {
       return line[1].substring(
@@ -328,8 +155,7 @@ function readFile(event) {
 
     const title1 = title(line1)
     const title2 = title(line2)
-    console.log(title1, title2)
-
+    
     const description = function (line) {
       return line[2].substring(
         line[2].indexOf("") + 1,
@@ -364,9 +190,8 @@ function readFile(event) {
 
     let clone = li.cloneNode(true)
     clone.setAttribute('data-id', id2)
-    
+
     const cloneTitle = clone.querySelector('.excursions__title')
-    console.log(cloneTitle)
     const cloneDescription = clone.querySelector('.excursions__description');
     const clonePrices = clone.querySelectorAll('.excursions__price');
 
@@ -382,20 +207,55 @@ function readFile(event) {
     ul.appendChild(clone)
 
     const order = document.querySelector('.order')
-    order.addEventListener('submit', function(e){
+    order.addEventListener('submit', function (e) {
       e.preventDefault()
     })
 
+   
     const excursion = document.querySelectorAll('.excursions__item')
-console.log(excursion[1])
-excursion[0].addEventListener('submit', addOrderOgrodzieniec)
-excursion[1].addEventListener('submit', addOrderOjców)
-
+    excursion[0].addEventListener('submit', addOrderOgrodzieniec)
+    excursion[1].addEventListener('submit', addOrderOjców)
 
   });
 
   reader.readAsText(selected);
 
+  showOgrodzieniec()
+  showOjców()
+
 };
+
+
+function showOgrodzieniec() {
+
+  const summary = document.querySelector('.summary')
+  const panelOgrodzieniec = document.querySelector('.summary__item--prototype')
+  panelOgrodzieniec.style.display = 'block'
+
+}
+
+function showOjców() {
+
+  const panelOgrodzieniecClone = panelOgrodzieniec.cloneNode(true);
+  const panelOjcow = panelOgrodzieniecClone
+  panelOjcow.classList.add('ojcow')
+  const panelOjcowTitle = panelOjcow.querySelector('.ojcow h3 .summary__name')
+  panelOjcowTitle.innerText = 'Ojców'
+  const panelOjcowTotalPrice = panelOjcow.querySelector('.ojcow h3 .summary__total-price')
+  panelOjcowTotalPrice.innerText = 0 + 'PLN'
+  const panelOjcowAdultPrice = panelOjcow.querySelector('.ojcow .summary__prices .adultPrice')
+  panelOjcowAdultPrice.innerText = '4'
+  const panelOjcowChildPrice = panelOjcow.querySelector('.ojcow  .summary__prices .childPrice')
+  panelOjcowChildPrice.innerText = '15'
+
+  summary.appendChild(panelOgrodzieniecClone)
+
+}
+
+
+
+
+
+
 
 
